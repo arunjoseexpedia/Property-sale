@@ -12,7 +12,7 @@ function Dashboard() {
   return (
     <div className="dashboard-full">
       <header className="dashboard-header">
-        <h3>Property Sale Dashboard</h3>
+        <h3>Walmart Commercial Properties for Sale</h3>
       </header>
       <div className="dashboard">
         
