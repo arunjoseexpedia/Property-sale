@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -64,11 +62,13 @@ nav a:hover {
   color: #42b883;
 }
 .dashboard-full {
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  height:100%;
+  
   background: #f4f6f8;
   margin: 0;
   padding: 0;
+  
 }
 .dashboard-header {
   width: 100vw;

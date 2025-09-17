@@ -12,7 +12,7 @@ function Dashboard() {
   return (
     <div className="dashboard-full">
       <header className="dashboard-header">
-        <h1>Property Sale Dashboard</h1>
+        <h3>Property Sale Dashboard</h3>
       </header>
       <div className="dashboard">
         
