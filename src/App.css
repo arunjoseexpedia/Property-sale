@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
 }
 
 .logo {
@@ -39,4 +45,78 @@
 
 .read-the-docs {
   color: #888;
+}
+
+nav {
+  background: #f8f8f8;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 700;
+  margin-right: 15px;
+  transition: color 0.2s;
+}
+nav a:hover {
+  color: #42b883;
+}
+.dashboard-full {
+  width: 100vw;
+  min-height: 100vh;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+.dashboard-header {
+  width: 100vw;
+  background: #42b883;
+  color: #fff;
+  padding: 8px 0 6px 0;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(66,184,131,0.08);
+}
+.dashboard {
+  width: 100vw;
+  margin: 0;
+  padding: 32px 16px;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.tabs button {
+  background: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px 6px 0 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.tabs button.active {
+  background: #42b883;
+  color: #fff;
+}
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.result-card {
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 16px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+.result-card:hover {
+  box-shadow: 0 4px 16px rgba(66,184,131,0.12);
 }
