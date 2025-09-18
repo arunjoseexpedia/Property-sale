@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import LeafletMap from './LeafletMap';
 import WalmartInsights from './WalmartInsights';
-import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
-import { Person } from '@mui/icons-material';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Card, CardContent, Button, Typography } from '@mui/material';
+import { Person, Apartment } from '@mui/icons-material';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('results');
@@ -21,7 +21,7 @@ function Dashboard() {
 
   const handleRoleChange = (newRole) => {
     setUser({ ...user, role: newRole });
-    if (newRole === 'user' && activeTab === 'insights') {
+    if (newRole === 'user' && (activeTab === 'insights' || activeTab === 'add-listing')) {
       setActiveTab('results');
     }
     handleClose();
@@ -193,13 +193,22 @@ function Dashboard() {
             Results
           </a>
           {user.role === 'admin' && (
-            <a
-              href="#"
-              className={`tab-item${activeTab === 'insights' ? ' active' : ''}`}
-              onClick={e => { e.preventDefault(); setActiveTab('insights'); }}
-            >
-              Insights
-            </a>
+            <>
+              <a
+                href="#"
+                className={`tab-item${activeTab === 'insights' ? ' active' : ''}`}
+                onClick={e => { e.preventDefault(); setActiveTab('insights'); }}
+              >
+                Insights
+              </a>
+              <a
+                href="#"
+                className={`tab-item${activeTab === 'add-listing' ? ' active' : ''}`}
+                onClick={e => { e.preventDefault(); setActiveTab('add-listing'); }}
+              >
+                Add Listings
+              </a>
+            </>
           )}
         </div>
         {activeTab === 'results' && (
@@ -264,6 +273,19 @@ function Dashboard() {
         )}
         {activeTab === 'insights' && (
           <WalmartInsights />
+        )}
+        {activeTab === 'add-listing' && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', padding: '20px', maxWidth: '1100px', margin: '0 auto' }}>
+            <Card sx={{ minWidth: 320, textAlign: 'center', padding: '30px' }}>
+              <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="h6" component="div" sx={{ mb: 3 }}>
+                  Add for Sale or Lease
+                </Typography>
+                <Apartment sx={{ fontSize: 120, color: 'grey.500', marginBottom: '24px' }} />
+                <Button variant="contained" size="large">Add Listing</Button>
+              </CardContent>
+            </Card>
+          </div>
         )}
       </div>
     </div>
