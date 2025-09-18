@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
-import MyMap from './MyMap';
+import LeafletMap from './LeafletMap';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
+import { Person } from '@mui/icons-material';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('results');
   const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState("");
+  const [user, setUser] = useState({ name: 'John Doe', role: 'admin' });
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleRoleChange = (newRole) => {
+    setUser({ ...user, role: newRole });
+    if (newRole === 'user' && activeTab === 'insights') {
+      setActiveTab('results');
+    }
+    handleClose();
+  };
 
   const cards = [
     {
@@ -91,11 +111,53 @@ function Dashboard() {
           <img src="/walmartlogo.png" alt="Walmart Logo" className="walmart-logo" />
           <h3 className="header-title">Property Sales Application</h3>
           <div className="header-user">
-            <div className="avatar">JD</div>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <div className="avatar">JD</div>
+            </IconButton>
             <div className="user-info">
-              <div className="user-name">John Doe</div>
-              <div className="user-role">admin</div>
+              <div className="user-name">{user.name}</div>
+              <div className="user-role">{user.role}</div>
             </div>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => handleRoleChange('admin')}
+                disabled={user.role === 'admin'}
+              >
+                <ListItemIcon>
+                  <Person fontSize='small' />
+                </ListItemIcon>
+                <ListItemText>Switch to Admin</ListItemText>
+              </MenuItem>
+              <MenuItem
+                onClick={() => handleRoleChange('user')}
+                disabled={user.role === 'user'}
+              >
+                <ListItemIcon>
+                  <Person fontSize='small' />
+                </ListItemIcon>
+                <ListItemText>Switch to User</ListItemText>
+              </MenuItem>
+            </Menu>
           </div>
         </div>
       </header>
@@ -129,13 +191,15 @@ function Dashboard() {
           >
             Results
           </a>
-          <a
-            href="#"
-            className={`tab-item${activeTab === 'insights' ? ' active' : ''}`}
-            onClick={e => { e.preventDefault(); setActiveTab('insights'); }}
-          >
-            Insights
-          </a>
+          {user.role === 'admin' && (
+            <a
+              href="#"
+              className={`tab-item${activeTab === 'insights' ? ' active' : ''}`}
+              onClick={e => { e.preventDefault(); setActiveTab('insights'); }}
+            >
+              Insights
+            </a>
+          )}
         </div>
         {activeTab === 'results' && (
           showMap ? (
@@ -166,13 +230,7 @@ function Dashboard() {
                 ))}
               </div>
               <div className="map-view">
-               
-  <img
-    src="https://static-maps.yandex.ru/1.x/?lang=en_US&ll=-122.4194,37.7749&size=600,400&z=13&l=map&pt=-122.4194,37.7749,pm2rdm"
-    alt="Map Demo"
-    style={{ width: '100%', height: '100%' }}
-  />
-
+                <LeafletMap />
               </div>
             </div>
           ) : (
