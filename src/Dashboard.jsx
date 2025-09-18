@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LeafletMap from './LeafletMap';
+import WalmartInsights from './WalmartInsights';
 import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
 import { Person } from '@mui/icons-material';
 
@@ -262,7 +263,7 @@ function Dashboard() {
           )
         )}
         {activeTab === 'insights' && (
-          <div style={{ minHeight: '300px' }}></div>
+          <WalmartInsights />
         )}
       </div>
     </div>
