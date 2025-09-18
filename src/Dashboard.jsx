@@ -1,21 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import MyMap from './MyMap';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('results');
   const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState("");
-  const mapRef = useRef(null);
 
   const cards = [
     {
       id: 1,
-      title: "Downtown Office Building",
-      address: "123 Main St, Los Angeles, CA",
+      title: "Tractor Supply Company",
+      address: "400 US-59, Los Angeles, CA",
       price: "$2,450,000",
       sqft: "15,000",
       type: "Office",
       status: "For Sale",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=200&fit=crop",
+      image: "https://images.crexi.com/assets/1754185/3b63a26af8be435bb18016922ffee20e_716x444.jpg",
       coordinates: { lat: 34.0522, lng: -118.2437 },
       cap_rate: "6.5%",
       noi: "$159,250",
@@ -24,13 +24,13 @@ function Dashboard() {
     },
     {
       id: 2,
-      title: "Industrial Warehouse Complex",
+      title: "Walmart Neighborhood Market",
       address: "456 Commerce Way, Long Beach, CA",
       price: "$3,200,000",
       sqft: "45,000",
       type: "Industrial",
       status: "For Sale",
-      image: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=300&h=200&fit=crop",
+      image: "https://images.crexi.com/assets/680605/f7a2ab02f4c349779790d3f5a6de705d_716x444.jpg",
       coordinates: { lat: 33.7701, lng: -118.1937 },
       cap_rate: "7.2%",
       noi: "$230,400",
@@ -39,13 +39,13 @@ function Dashboard() {
     },
     {
       id: 3,
-      title: "Retail Shopping Center",
+      title: "Walmart Neighborhood Market",
       address: "789 Shopping Blvd, Beverly Hills, CA",
       price: "$5,750,000",
       sqft: "28,500",
       type: "Retail",
       status: "For Sale",
-      image: "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=300&h=200&fit=crop",
+      image: "https://images.crexi.com/assets/798107/327f6c4be84e45678b42829fcfc3c257_716x444.jpg",
       coordinates: { lat: 34.0736, lng: -118.4004 },
       cap_rate: "5.8%",
       noi: "$333,500",
@@ -54,13 +54,13 @@ function Dashboard() {
     },
     {
       id: 4,
-      title: "Multi-Family Apartment Complex",
+      title: "Southern Tier Crossing",
       address: "321 Residential Ave, Santa Monica, CA",
       price: "$4,100,000",
       sqft: "32,000",
       type: "Multi-Family",
       status: "For Sale",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&h=200&fit=crop",
+      image: "https://images.crexi.com/assets/681973/6f12e9752e644384aaa7b7e6aafab363_716x444.jpg",
       coordinates: { lat: 34.0195, lng: -118.4912 },
       cap_rate: "6.1%",
       noi: "$250,100",
@@ -69,13 +69,13 @@ function Dashboard() {
     },
     {
       id: 5,
-      title: "Medical Office Building",
+      title: "Falcon Gateway",
       address: "654 Health Plaza, Pasadena, CA",
       price: "$1,950,000",
       sqft: "12,800",
       type: "Office",
       status: "For Sale",
-      image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=300&h=200&fit=crop",
+      image: "https://images.crexi.com/assets/1951859/b6ac7f59670d41a1a3612e8d9d33e7b9_716x444.jpg",
       coordinates: { lat: 34.1478, lng: -118.1445 },
       cap_rate: "6.8%",
       noi: "$132,600",
@@ -152,7 +152,7 @@ function Dashboard() {
                       <p className="card-address">{card.address}</p>
                       <p className="card-price">{card.price}</p>
                       <p className="card-details">
-                        <span>SqFt: {card.sqft}</span> | <span>Type: {card.type}</span> | <span>Status: {card.status}</span>
+                        <span>SqFt: {card.sqft}</span>| <span>Status: {card.status}</span>
                       </p>
                       <p className="card-details">
                         <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
@@ -166,13 +166,13 @@ function Dashboard() {
                 ))}
               </div>
               <div className="map-view">
-                <div
-                  ref={mapRef}
-                  className="w-full h-full bg-gradient-to-br from-blue-100 to-green-100 relative overflow-hidden"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.05'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-                  }}
-                ></div>
+               
+  <img
+    src="https://static-maps.yandex.ru/1.x/?lang=en_US&ll=-122.4194,37.7749&size=600,400&z=13&l=map&pt=-122.4194,37.7749,pm2rdm"
+    alt="Map Demo"
+    style={{ width: '100%', height: '100%' }}
+  />
+
               </div>
             </div>
           ) : (
@@ -188,7 +188,7 @@ function Dashboard() {
                     <p className="card-address">{card.address}</p>
                     <p className="card-price">{card.price}</p>
                     <p className="card-details">
-                      <span>SqFt: {card.sqft}</span> | <span>Type: {card.type}</span> | <span>Status: {card.status}</span>
+                      <span>SqFt: {card.sqft}</span> | <span>Status: {card.status}</span>
                     </p>
                     <p className="card-details">
                       <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
