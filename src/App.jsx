@@ -5,7 +5,7 @@ import './App.css'
 function App() {
 
   return (
-    <Router>
+    <Router basename="/Property-sale">
       <Routes>
         <Route path="/" element={<Dashboard />} />
       </Routes>

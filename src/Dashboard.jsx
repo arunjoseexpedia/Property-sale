@@ -109,7 +109,7 @@ function Dashboard() {
     <div className="dashboard-full">
       <header className="dashboard-header">
         <div className="header-content">
-          <img src="/walmartlogo.png" alt="Walmart Logo" className="walmart-logo" />
+          <img src="./walmartlogo.png" alt="Walmart Logo" className="walmart-logo" />
           <h3 className="header-title">Property Sales Application</h3>
           <div className="header-user">
             <IconButton
