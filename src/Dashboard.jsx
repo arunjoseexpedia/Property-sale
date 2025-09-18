@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('results');
   const [showMap, setShowMap] = useState(false);
+  const [search, setSearch] = useState("");
 
   const cards = [
     {
@@ -107,6 +108,8 @@ function Dashboard() {
               type="text"
               className="search-bar"
               placeholder="Enter a location or keyword"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
             />
           </div>
           <div className="map-toggle-container">
@@ -134,28 +137,64 @@ function Dashboard() {
           </a>
         </div>
         {activeTab === 'results' && (
-          <div className="results-grid">
-            {cards.map((card) => (
-              <div className="result-card" key={card.id}>
-                <img src={card.image} alt={card.title} className="card-image" />
-                <div className="card-content">
-                  <h3 className="card-title">{card.title}</h3>
-                  <p className="card-address">{card.address}</p>
-                  <p className="card-price">{card.price}</p>
-                  <p className="card-details">
-                    <span>SqFt: {card.sqft}</span> | <span>Type: {card.type}</span> | <span>Status: {card.status}</span>
-                  </p>
-                  <p className="card-details">
-                    <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
-                  </p>
-                  <p className="card-details">
-                    <span>Views: {card.views}</span> | <span>Days on Market: {card.days_on_market}</span>
-                  </p>
-                  <button className="view-om-button">View OM</button>
-                </div>
+          showMap ? (
+            <div className="split-view">
+              <div className="results-grid split-grid">
+                {cards.filter(card =>
+                  search.trim() === "" ||
+                  card.address.toLowerCase().includes(search.toLowerCase())
+                ).map((card) => (
+                  <div className="result-card" key={card.id}>
+                    <img src={card.image} alt={card.title} className="card-image" />
+                    <div className="card-content">
+                      <h3 className="card-title">{card.title}</h3>
+                      <p className="card-address">{card.address}</p>
+                      <p className="card-price">{card.price}</p>
+                      <p className="card-details">
+                        <span>SqFt: {card.sqft}</span> | <span>Type: {card.type}</span> | <span>Status: {card.status}</span>
+                      </p>
+                      <p className="card-details">
+                        <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
+                      </p>
+                      <p className="card-details">
+                        <span>Views: {card.views}</span> | <span>Days on Market: {card.days_on_market}</span>
+                      </p>
+                      <button className="view-om-button">View OM</button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+              <div className="map-view">
+                <div className="map-placeholder">Map View</div>
+              </div>
+            </div>
+          ) : (
+            <div className="results-grid">
+              {cards.filter(card =>
+                search.trim() === "" ||
+                card.address.toLowerCase().includes(search.toLowerCase())
+              ).map((card) => (
+                <div className="result-card" key={card.id}>
+                  <img src={card.image} alt={card.title} className="card-image" />
+                  <div className="card-content">
+                    <h3 className="card-title">{card.title}</h3>
+                    <p className="card-address">{card.address}</p>
+                    <p className="card-price">{card.price}</p>
+                    <p className="card-details">
+                      <span>SqFt: {card.sqft}</span> | <span>Type: {card.type}</span> | <span>Status: {card.status}</span>
+                    </p>
+                    <p className="card-details">
+                      <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
+                    </p>
+                    <p className="card-details">
+                      <span>Views: {card.views}</span> | <span>Days on Market: {card.days_on_market}</span>
+                    </p>
+                    <button className="view-om-button">View OM</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
         )}
         {activeTab === 'insights' && (
           <div style={{ minHeight: '300px' }}></div>
