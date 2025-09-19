@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LeafletMap from './LeafletMap';
 import AddListing from './AddListing';
 import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography } from '@mui/material';
@@ -11,6 +11,7 @@ function Dashboard() {
   const [priceSliderValue, setPriceSliderValue] = useState(100);
   const [user, setUser] = useState({ name: 'John Doe', role: 'admin' });
   const [anchorEl, setAnchorEl] = useState(null);
+  const [filteredLocation, setFilteredLocation] = useState(null);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,6 +29,19 @@ function Dashboard() {
     handleClose();
   };
 
+  const handleMapToggle = () => {
+    setShowMap(prevShowMap => {
+      const newShowMap = !prevShowMap;
+      if (!newShowMap) {
+        setFilteredLocation(null);
+      }
+      return newShowMap;
+    });
+  };
+
+  const handleMapClick = (lat, lng) => {
+    setFilteredLocation({ lat, lng });
+  };
   const cards = [
     {
       id: 1,
@@ -121,6 +135,15 @@ function Dashboard() {
 
     const searchMatch = search.trim() === "" || card.address.toLowerCase().includes(search.toLowerCase());
     const priceMatch = cardPrice <= sliderMaxPrice;
+
+    if (showMap && filteredLocation) {
+      const latDiff = Math.abs(card.coordinates.lat - filteredLocation.lat);
+      const lngDiff = Math.abs(card.coordinates.lng - filteredLocation.lng);
+      // Simple distance check, you might want a more accurate one
+      if (latDiff > 0.1 || lngDiff > 0.1) {
+        return false;
+      }
+    }
 
     return searchMatch && priceMatch;
   });
@@ -223,7 +246,7 @@ function Dashboard() {
           <div className="map-toggle-container">
             <span className="map-toggle-label">Show Map</span>
             <label className="switch">
-              <input type="checkbox" checked={showMap} onChange={() => setShowMap(!showMap)} />
+              <input type="checkbox" checked={showMap} onChange={handleMapToggle} />
               <span className="slider round"></span>
             </label>
           </div>
@@ -272,7 +295,7 @@ function Dashboard() {
                 ))}
               </div>
               <div className="map-view">
-                <LeafletMap />
+                <LeafletMap onMapClick={handleMapClick} />
               </div>
             </div>
           ) : (
