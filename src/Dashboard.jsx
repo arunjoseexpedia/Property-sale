@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import LeafletMap from './LeafletMap';
-import WalmartInsights from './WalmartInsights';
 import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Card, CardContent, Button, Typography } from '@mui/material';
 import { Person, Apartment } from '@mui/icons-material';
 
@@ -21,7 +20,7 @@ function Dashboard() {
 
   const handleRoleChange = (newRole) => {
     setUser({ ...user, role: newRole });
-    if (newRole === 'user' && (activeTab === 'insights' || activeTab === 'add-listing')) {
+    if (newRole === 'user' && activeTab === 'add-listing') {
       setActiveTab('results');
     }
     handleClose();
@@ -193,22 +192,13 @@ function Dashboard() {
             Results
           </a>
           {user.role === 'admin' && (
-            <>
-              <a
-                href="#"
-                className={`tab-item${activeTab === 'insights' ? ' active' : ''}`}
-                onClick={e => { e.preventDefault(); setActiveTab('insights'); }}
-              >
-                Insights
-              </a>
-              <a
-                href="#"
-                className={`tab-item${activeTab === 'add-listing' ? ' active' : ''}`}
-                onClick={e => { e.preventDefault(); setActiveTab('add-listing'); }}
-              >
-                Add Listings
-              </a>
-            </>
+            <a
+              href="#"
+              className={`tab-item${activeTab === 'add-listing' ? ' active' : ''}`}
+              onClick={e => { e.preventDefault(); setActiveTab('add-listing'); }}
+            >
+              Add Listings
+            </a>
           )}
         </div>
         {activeTab === 'results' && (
@@ -270,9 +260,6 @@ function Dashboard() {
               ))}
             </div>
           )
-        )}
-        {activeTab === 'insights' && (
-          <WalmartInsights />
         )}
         {activeTab === 'add-listing' && (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', padding: '20px', maxWidth: '1100px', margin: '0 auto' }}>
