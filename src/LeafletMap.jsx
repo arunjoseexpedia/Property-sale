@@ -16,7 +16,7 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const LeafletMap = () => {
-  const position = [51.505, -0.09]; // Example coordinates (London)
+  const position = [34.0522, -118.2437]; 
 
   return (
     <MapContainer center={position} zoom={13} style={{ height: '500px', width: '100%' }}>
