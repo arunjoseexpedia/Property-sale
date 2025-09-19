@@ -1,11 +1,20 @@
-import React from 'react';
-import { TextField, Button, Box, Typography, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Box, Typography, Paper, InputAdornment } from '@mui/material';
+import LeafletMap from './LeafletMap';
 
 const ListingForm = ({ onCancel }) => {
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+
+  const handleMapClick = (lat, lng) => {
+    setLatitude(lat);
+    setLongitude(lng);
+  };
+
   return (
     <Paper sx={{ p: 4, maxWidth: 800, margin: 'auto' }}>
       <Typography variant="h5" component="h2" sx={{ mb: 3 }}>
-        Create New Listing
+        Create New Property Details
       </Typography>
       <Box
         component="form"
@@ -17,16 +26,42 @@ const ListingForm = ({ onCancel }) => {
         noValidate
         autoComplete="off"
       >
-        <TextField label="Title" variant="outlined" />
-        <TextField label="Address" variant="outlined" />
-        <TextField label="Price" variant="outlined" type="number" />
-        <TextField label="SqFt" variant="outlined" type="number" />
-        <TextField label="Type" variant="outlined" />
-        <TextField label="Status" variant="outlined" />
-        <TextField label="CAP Rate" variant="outlined" />
-        <TextField label="NOI" variant="outlined" />
-        <TextField label="Latitude" variant="outlined" />
-        <TextField label="Longitude" variant="outlined" />
+        <TextField label="Title" variant="outlined" required />
+        <TextField label="Address" variant="outlined" required />
+        <TextField
+          label="Price"
+          variant="outlined"
+          type="number"
+          required
+          InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          }}
+        />
+        <TextField label="SqFt" variant="outlined" type="number" required />
+        <TextField label="Type" variant="outlined" required />
+        <TextField label="Status" variant="outlined" required />
+        <TextField label="CAP Rate" variant="outlined" required />
+        <TextField label="NOI" variant="outlined" required />
+        <TextField
+          label="Latitude"
+          variant="outlined"
+          required
+          value={latitude}
+          disabled
+        />
+        <TextField
+          label="Longitude"
+          variant="outlined"
+          required
+          value={longitude}
+          disabled
+        />
+      </Box>
+      <Box sx={{ mt: 3 }}>
+        <Typography sx={{ mb: 1, fontStyle: 'italic', color: 'text.secondary' }}>
+          Select latitude and longitude from map
+        </Typography>
+        <LeafletMap onMapClick={handleMapClick} />
       </Box>
       <Box
         sx={{

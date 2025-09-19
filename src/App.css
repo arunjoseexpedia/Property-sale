@@ -385,4 +385,8 @@ input:checked + .slider:before {
   overflow: hidden;
 }
 
+.MuiInputLabel-asterisk {
+  color: #c20b07;
+}
+
 
