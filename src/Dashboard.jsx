@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import LeafletMap from './LeafletMap';
 import AddListing from './AddListing';
-import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography } from '@mui/material';
 import { Person } from '@mui/icons-material';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('results');
   const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState("");
+  const [priceSliderValue, setPriceSliderValue] = useState(100);
   const [user, setUser] = useState({ name: 'John Doe', role: 'admin' });
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -105,6 +106,32 @@ function Dashboard() {
     }
   ];
 
+  const parsePrice = (priceString) => {
+    return parseInt(priceString.replace(/\$|,/g, ''));
+  };
+
+  const prices = cards.map(card => parsePrice(card.price));
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  const filteredCards = cards.filter(card => {
+    const cardPrice = parsePrice(card.price);
+    
+    const sliderMaxPrice = minPrice + ((maxPrice - minPrice) * priceSliderValue) / 100;
+
+    const searchMatch = search.trim() === "" || card.address.toLowerCase().includes(search.toLowerCase());
+    const priceMatch = cardPrice <= sliderMaxPrice;
+
+    return searchMatch && priceMatch;
+  });
+
+  const sliderMarks = [
+    { value: 0, label: 'Min' },
+    { value: 50, label: 'Mid' },
+    { value: 100, label: 'Max' },
+  ];
+
+
   return (
     <div className="dashboard-full">
       <header className="dashboard-header">
@@ -176,6 +203,23 @@ function Dashboard() {
               onChange={e => setSearch(e.target.value)}
             />
           </div>
+          <Box sx={{ width: 300, padding: '0 20px' }}>
+            <Typography id="price-slider" gutterBottom>
+              Price Range
+            </Typography>
+            <Slider
+              aria-labelledby="price-slider"
+              value={priceSliderValue}
+              onChange={(e, newValue) => setPriceSliderValue(newValue)}
+              marks={sliderMarks}
+              step={10}
+              valueLabelDisplay="auto"
+              valueLabelFormat={(value) => {
+                const price = minPrice + ((maxPrice - minPrice) * value) / 100;
+                return `$${(price / 1000000).toFixed(1)}M`;
+              }}
+            />
+          </Box>
           <div className="map-toggle-container">
             <span className="map-toggle-label">Show Map</span>
             <label className="switch">
@@ -206,10 +250,7 @@ function Dashboard() {
           showMap ? (
             <div className="split-view">
               <div className="results-grid split-grid">
-                {cards.filter(card =>
-                  search.trim() === "" ||
-                  card.address.toLowerCase().includes(search.toLowerCase())
-                ).map((card) => (
+                {filteredCards.map((card) => (
                   <div className="result-card" key={card.id}>
                     <img src={card.image} alt={card.title} className="card-image" />
                     <div className="card-content">
@@ -236,10 +277,7 @@ function Dashboard() {
             </div>
           ) : (
             <div className="results-grid">
-              {cards.filter(card =>
-                search.trim() === "" ||
-                card.address.toLowerCase().includes(search.toLowerCase())
-              ).map((card) => (
+              {filteredCards.map((card) => (
                 <div className="result-card" key={card.id}>
                   <img src={card.image} alt={card.title} className="card-image" />
                   <div className="card-content">

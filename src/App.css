@@ -389,4 +389,39 @@ input:checked + .slider:before {
   color: #c20b07;
 }
 
+.price-filter-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.price-filter-input {
+  width: 120px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.price-filter-input:focus {
+  border-color: #1976d2;
+}
+
+.clear-price-filter-button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: 8px;
+}
+
+.clear-price-filter-button:hover {
+  background-color: #f3f4f6;
+}
+
 
