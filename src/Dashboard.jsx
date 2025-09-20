@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LeafletMap from './LeafletMap';
 import AddListing from './AddListing';
-import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography } from '@mui/material';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating } from '@mui/material';
 import { Person } from '@mui/icons-material';
 
 function Dashboard() {
@@ -56,7 +56,8 @@ function Dashboard() {
       cap_rate: "6.5%",
       noi: "$159,250",
       views: 245,
-      days_on_market: 23
+      days_on_market: 23,
+      rating: 4.5
     },
     {
       id: 2,
@@ -71,7 +72,8 @@ function Dashboard() {
       cap_rate: "7.2%",
       noi: "$230,400",
       views: 182,
-      days_on_market: 15
+      days_on_market: 15,
+      rating: 5
     },
     {
       id: 3,
@@ -86,7 +88,8 @@ function Dashboard() {
       cap_rate: "5.8%",
       noi: "$333,500",
       views: 389,
-      days_on_market: 45
+      days_on_market: 45,
+      rating: 4
     },
     {
       id: 4,
@@ -101,7 +104,8 @@ function Dashboard() {
       cap_rate: "6.1%",
       noi: "$250,100",
       views: 156,
-      days_on_market: 8
+      days_on_market: 8,
+      rating: 3.5
     },
     {
       id: 5,
@@ -116,7 +120,8 @@ function Dashboard() {
       cap_rate: "6.8%",
       noi: "$132,600",
       views: 298,
-      days_on_market: 32
+      days_on_market: 32,
+      rating: 4
     }
   ];
 
@@ -279,6 +284,7 @@ function Dashboard() {
                     <div className="card-content">
                       <h3 className="card-title">{card.title}</h3>
                       <p className="card-address">{card.address}</p>
+                      <Rating name="read-only" value={card.rating} precision={0.5} readOnly />
                       <p className="card-price">{card.price}</p>
                       <p className="card-details">
                         <span>SqFt: {card.sqft}</span>| <span>Status: {card.status}</span>
@@ -306,6 +312,7 @@ function Dashboard() {
                   <div className="card-content">
                     <h3 className="card-title">{card.title}</h3>
                     <p className="card-address">{card.address}</p>
+                    <Rating name="read-only" value={card.rating} precision={0.5} readOnly />
                     <p className="card-price">{card.price}</p>
                     <p className="card-details">
                       <span>SqFt: {card.sqft}</span> | <span>Status: {card.status}</span>
