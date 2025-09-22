@@ -3,6 +3,8 @@ import LeafletMap from './LeafletMap';
 import AddListing from './AddListing';
 import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating } from '@mui/material';
 import { Person } from '@mui/icons-material';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import { Carousel } from 'react-responsive-carousel';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('results');
@@ -51,7 +53,10 @@ function Dashboard() {
       sqft: "15,000",
       type: "Office",
       status: "For Sale",
-      image: "https://images.crexi.com/assets/1754185/3b63a26af8be435bb18016922ffee20e_716x444.jpg",
+      images: [
+        "https://images.crexi.com/assets/1754185/3b63a26af8be435bb18016922ffee20e_716x444.jpg",
+        "https://images.crexi.com/assets/2097706/117e6067a4bc426283f1b56fd488edda_716x444.jpg"
+      ],
       coordinates: { lat: 34.0522, lng: -118.2437 },
       cap_rate: "6.5%",
       noi: "$159,250",
@@ -67,7 +72,10 @@ function Dashboard() {
       sqft: "45,000",
       type: "Industrial",
       status: "For Sale",
-      image: "https://images.crexi.com/assets/680605/f7a2ab02f4c349779790d3f5a6de705d_716x444.jpg",
+      images: [
+        "https://images.crexi.com/assets/680605/f7a2ab02f4c349779790d3f5a6de705d_716x444.jpg",
+        "https://images.crexi.com/assets/681973/6f12e9752e644384aaa7b7e6aafab363_716x444.jpg"
+      ],
       coordinates: { lat: 33.7701, lng: -118.1937 },
       cap_rate: "7.2%",
       noi: "$230,400",
@@ -83,7 +91,10 @@ function Dashboard() {
       sqft: "28,500",
       type: "Retail",
       status: "For Sale",
-      image: "https://images.crexi.com/assets/798107/327f6c4be84e45678b42829fcfc3c257_716x444.jpg",
+      images: [
+        "https://images.crexi.com/assets/798107/327f6c4be84e45678b42829fcfc3c257_716x444.jpg",
+        "https://images.crexi.com/assets/1828916/7d04c11c8ed647a695e2609f5e6e1e08_716x444.jpg"
+      ],
       coordinates: { lat: 34.0736, lng: -118.4004 },
       cap_rate: "5.8%",
       noi: "$333,500",
@@ -99,7 +110,10 @@ function Dashboard() {
       sqft: "32,000",
       type: "Multi-Family",
       status: "For Sale",
-      image: "https://images.crexi.com/assets/681973/6f12e9752e644384aaa7b7e6aafab363_716x444.jpg",
+      images: [
+        "https://images.crexi.com/assets/681973/6f12e9752e644384aaa7b7e6aafab363_716x444.jpg",
+        "https://images.crexi.com/assets/1817988/3671b61d298f48e989d97e0c5dd06835_716x444.jpg"
+      ],
       coordinates: { lat: 34.0195, lng: -118.4912 },
       cap_rate: "6.1%",
       noi: "$250,100",
@@ -115,7 +129,10 @@ function Dashboard() {
       sqft: "12,800",
       type: "Office",
       status: "For Sale",
-      image: "https://images.crexi.com/assets/1951859/b6ac7f59670d41a1a3612e8d9d33e7b9_716x444.jpg",
+      images: [
+        "https://images.crexi.com/assets/1951859/b6ac7f59670d41a1a3612e8d9d33e7b9_716x444.jpg",
+        "https://images.crexi.com/assets/680605/9e0ba1c5201543a18d1d5d32c8dd3d9a_716x444.jpg"
+      ],
       coordinates: { lat: 34.1478, lng: -118.1445 },
       cap_rate: "6.8%",
       noi: "$132,600",
@@ -280,7 +297,13 @@ function Dashboard() {
               <div className="results-grid split-grid">
                 {filteredCards.map((card) => (
                   <div className="result-card" key={card.id}>
-                    <img src={card.image} alt={card.title} className="card-image" />
+                    <Carousel showThumbs={false} infiniteLoop useKeyboardArrows>
+                      {card.images.map((image, index) => (
+                        <div key={index}>
+                          <img src={image} alt={`${card.title} ${index + 1}`} className="card-image" />
+                        </div>
+                      ))}
+                    </Carousel>
                     <div className="card-content">
                       <h3 className="card-title">{card.title}</h3>
                       <p className="card-address">{card.address}</p>
@@ -308,7 +331,13 @@ function Dashboard() {
             <div className="results-grid">
               {filteredCards.map((card) => (
                 <div className="result-card" key={card.id}>
-                  <img src={card.image} alt={card.title} className="card-image" />
+                  <Carousel showThumbs={false} infiniteLoop useKeyboardArrows>
+                    {card.images.map((image, index) => (
+                      <div key={index}>
+                        <img src={image} alt={`${card.title} ${index + 1}`} className="card-image" />
+                      </div>
+                    ))}
+                  </Carousel>
                   <div className="card-content">
                     <h3 className="card-title">{card.title}</h3>
                     <p className="card-address">{card.address}</p>
