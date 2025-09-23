@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LeafletMap from './LeafletMap';
 import AddListing from './AddListing';
-import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating, Skeleton } from '@mui/material';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating, Skeleton, Paper } from '@mui/material';
 import { Person } from '@mui/icons-material';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { Carousel } from 'react-responsive-carousel';
@@ -185,7 +185,7 @@ function Dashboard() {
   }, []);
 
   const SkeletonCard = () => (
-    <div className="result-card">
+    <Paper elevation={3} className="result-card">
       <Skeleton variant="rectangular" height={250} animation="wave" />
       <div className="card-content">
         <Skeleton variant="text" height={32} width="80%" sx={{ mb: 1 }} animation="wave" />
@@ -197,11 +197,21 @@ function Dashboard() {
         <Skeleton variant="text" height={24} width="75%" sx={{ mb: 1 }} animation="wave" />
         <Skeleton variant="rectangular" height={36} width="100%" animation="wave" />
       </div>
-    </div>
+    </Paper>
   );
 
   const CardContent = ({ card }) => (
-    <div className="result-card">
+    <Paper 
+      elevation={3} 
+      className="result-card"
+      sx={{
+        transition: 'all 0.3s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: 6
+        }
+      }}
+    >
       <Carousel showThumbs={false} infiniteLoop useKeyboardArrows>
         {card.images.map((image, index) => (
           <div key={index}>
@@ -225,7 +235,7 @@ function Dashboard() {
         </p>
         <button className="view-om-button">View OM</button>
       </div>
-    </div>
+    </Paper>
   );
 
   return (
