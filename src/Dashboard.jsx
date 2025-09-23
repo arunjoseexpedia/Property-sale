@@ -237,16 +237,16 @@ function Dashboard() {
       <div className="dashboard">
         <div className="search-bar-container">
           <div className="search-bar-wrapper">
-            <span className="search-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            </span>
-            <input
+           <input
               type="text"
               className="search-bar"
-              placeholder="Enter a location or keyword"
+              placeholder="Enter a location or a keyword"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
+             <span className="search-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#212529" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
           </div>
           <Box sx={{ width: 300, padding: '0 20px' }}>
             <Typography id="price-slider" gutterBottom>
