@@ -208,7 +208,8 @@ function Dashboard() {
         transition: 'all 0.3s ease-in-out',
         '&:hover': {
           transform: 'translateY(-4px)',
-          boxShadow: 6
+          boxShadow: 6,
+          border:'1px solid #0a63cb'
         }
       }}
     >
