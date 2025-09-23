@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LeafletMap from './LeafletMap';
 import AddListing from './AddListing';
-import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating } from '@mui/material';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating, Skeleton } from '@mui/material';
 import { Person } from '@mui/icons-material';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { Carousel } from 'react-responsive-carousel';
@@ -14,6 +14,7 @@ function Dashboard() {
   const [user, setUser] = useState({ name: 'John Doe', role: 'admin' });
   const [anchorEl, setAnchorEl] = useState(null);
   const [filteredLocation, setFilteredLocation] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -176,6 +177,56 @@ function Dashboard() {
     { value: 100, label: 'Max' },
   ];
 
+  useEffect(() => {
+    // Simulate loading
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  const SkeletonCard = () => (
+    <div className="result-card">
+      <Skeleton variant="rectangular" height={250} animation="wave" />
+      <div className="card-content">
+        <Skeleton variant="text" height={32} width="80%" sx={{ mb: 1 }} animation="wave" />
+        <Skeleton variant="text" height={24} width="60%" sx={{ mb: 1 }} animation="wave" />
+        <Skeleton variant="rectangular" height={24} width="120px" sx={{ mb: 1 }} animation="wave" />
+        <Skeleton variant="text" height={28} width="40%" sx={{ mb: 1 }} animation="wave" />
+        <Skeleton variant="text" height={24} width="70%" sx={{ mb: 1 }} animation="wave" />
+        <Skeleton variant="text" height={24} width="65%" sx={{ mb: 1 }} animation="wave" />
+        <Skeleton variant="text" height={24} width="75%" sx={{ mb: 1 }} animation="wave" />
+        <Skeleton variant="rectangular" height={36} width="100%" animation="wave" />
+      </div>
+    </div>
+  );
+
+  const CardContent = ({ card }) => (
+    <div className="result-card">
+      <Carousel showThumbs={false} infiniteLoop useKeyboardArrows>
+        {card.images.map((image, index) => (
+          <div key={index}>
+            <img src={image} alt={`${card.title} ${index + 1}`} className="card-image" />
+          </div>
+        ))}
+      </Carousel>
+      <div className="card-content">
+        <h3 className="card-title">{card.title}</h3>
+        <p className="card-address">{card.address}</p>
+        <Rating name="read-only" value={card.rating} precision={0.5} readOnly />
+        <p className="card-price">{card.price}</p>
+        <p className="card-details">
+          <span>SqFt: {card.sqft}</span> | <span>Status: {card.status}</span>
+        </p>
+        <p className="card-details">
+          <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
+        </p>
+        <p className="card-details">
+          <span>Views: {card.views}</span> | <span>Days on Market: {card.days_on_market}</span>
+        </p>
+        <button className="view-om-button">View OM</button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="dashboard-full">
@@ -295,33 +346,11 @@ function Dashboard() {
           showMap ? (
             <div className="split-view">
               <div className="results-grid split-grid">
-                {filteredCards.map((card) => (
-                  <div className="result-card" key={card.id}>
-                    <Carousel showThumbs={false} infiniteLoop useKeyboardArrows>
-                      {card.images.map((image, index) => (
-                        <div key={index}>
-                          <img src={image} alt={`${card.title} ${index + 1}`} className="card-image" />
-                        </div>
-                      ))}
-                    </Carousel>
-                    <div className="card-content">
-                      <h3 className="card-title">{card.title}</h3>
-                      <p className="card-address">{card.address}</p>
-                      <Rating name="read-only" value={card.rating} precision={0.5} readOnly />
-                      <p className="card-price">{card.price}</p>
-                      <p className="card-details">
-                        <span>SqFt: {card.sqft}</span>| <span>Status: {card.status}</span>
-                      </p>
-                      <p className="card-details">
-                        <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
-                      </p>
-                      <p className="card-details">
-                        <span>Views: {card.views}</span> | <span>Days on Market: {card.days_on_market}</span>
-                      </p>
-                      <button className="view-om-button">View OM</button>
-                    </div>
-                  </div>
-                ))}
+                {loading ? (
+                  [...Array(6)].map((_, index) => <SkeletonCard key={`skeleton-${index}`} />)
+                ) : (
+                  filteredCards.map((card) => <CardContent key={card.id} card={card} />)
+                )}
               </div>
               <div className="map-view">
                 <LeafletMap onMapClick={handleMapClick} />
@@ -329,33 +358,11 @@ function Dashboard() {
             </div>
           ) : (
             <div className="results-grid">
-              {filteredCards.map((card) => (
-                <div className="result-card" key={card.id}>
-                  <Carousel showThumbs={false} infiniteLoop useKeyboardArrows>
-                    {card.images.map((image, index) => (
-                      <div key={index}>
-                        <img src={image} alt={`${card.title} ${index + 1}`} className="card-image" />
-                      </div>
-                    ))}
-                  </Carousel>
-                  <div className="card-content">
-                    <h3 className="card-title">{card.title}</h3>
-                    <p className="card-address">{card.address}</p>
-                    <Rating name="read-only" value={card.rating} precision={0.5} readOnly />
-                    <p className="card-price">{card.price}</p>
-                    <p className="card-details">
-                      <span>SqFt: {card.sqft}</span> | <span>Status: {card.status}</span>
-                    </p>
-                    <p className="card-details">
-                      <span>CAP Rate: {card.cap_rate}</span> | <span>NOI: {card.noi}</span>
-                    </p>
-                    <p className="card-details">
-                      <span>Views: {card.views}</span> | <span>Days on Market: {card.days_on_market}</span>
-                    </p>
-                    <button className="view-om-button">View OM</button>
-                  </div>
-                </div>
-              ))}
+              {loading ? (
+                [...Array(6)].map((_, index) => <SkeletonCard key={`skeleton-${index}`} />)
+              ) : (
+                filteredCards.map((card) => <CardContent key={card.id} card={card} />)
+              )}
             </div>
           )
         )}
