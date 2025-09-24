@@ -80,6 +80,18 @@ nav a:hover {
   position: relative;
   box-sizing: border-box;
 }
+.carousel-arrow:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.carousel.carousel-slider .control-arrow:hover {
+  background: transparent !important;
+}
+
+.carousel.carousel-slider .control-arrow:before {
+  border-color: none !important;
+}
 .header-content {
   display: flex;
   align-items: center;
