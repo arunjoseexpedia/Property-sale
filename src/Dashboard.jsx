@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import LeafletMap from './LeafletMap';
 import AddListing from './AddListing';
-import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating, Skeleton, Paper } from '@mui/material';
-import { Person } from '@mui/icons-material';
+import { Menu, MenuItem, ListItemIcon, ListItemText, IconButton, Slider, Box, Typography, Rating, Skeleton, Paper, Fab, Dialog, DialogContent, DialogTitle, TextField, Button,Slide } from '@mui/material';
+import { Person, Chat, KeyboardArrowDown, Send, RecordVoiceOver } from '@mui/icons-material';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { Carousel } from 'react-responsive-carousel';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('results');
+  const [chatOpen, setChatOpen] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [search, setSearch] = useState("");
   const [priceSliderValue, setPriceSliderValue] = useState(100);
@@ -20,6 +21,10 @@ function Dashboard() {
     setAnchorEl(event.currentTarget);
   };
 
+  const [message, setMessage] = useState('');
+  const handleChatClick = () => {
+    setChatOpen(prev => !prev);
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -143,6 +148,16 @@ function Dashboard() {
     }
   ];
 
+  
+
+  const handleSendClick = () => {
+    if (message.trim() === '') return;
+    // For now just clear input after "sending"
+    console.log('Send message:', message);
+    setMessage('');
+  };
+
+
   const parsePrice = (priceString) => {
     return parseInt(priceString.replace(/\$|,/g, ''));
   };
@@ -239,8 +254,105 @@ function Dashboard() {
     </Paper>
   );
 
+  
   return (
     <div className="dashboard-full">
+       <Slide direction="up" in={chatOpen} mountOnEnter unmountOnExit>
+        <Paper
+          elevation={4}
+          sx={{
+            position: 'fixed',
+            bottom: 100,
+            right: 24,
+            width: 300,
+            height: 400,
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: 2,
+            overflow: 'hidden',
+            zIndex: 1300, // above FAB
+          }}
+        >
+          {/* Header */}
+          <Box
+            sx={{
+              backgroundColor: '#0a63cb',
+              color: 'white',
+              p: 1.5,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <RecordVoiceOver />
+    <Typography variant="subtitle1">  Virtual Assistant</Typography>
+  </Box>
+            
+            <IconButton size="small" onClick={handleChatClick} sx={{ color: 'white' }}>
+              <KeyboardArrowDown />
+            </IconButton>
+          </Box>
+
+          {/* Body */}
+          <Box sx={{ flex: 1, p: 2, backgroundColor: '#f5f5f5' }}>
+            <Typography variant="body1">
+              Hi, I am your property virtual assistant. How can I help you?
+            </Typography>
+          </Box>
+
+           <Box
+        sx={{
+          p: 1,
+          display: 'flex',
+          alignItems: 'center',
+          borderTop: '1px solid #ddd',
+          backgroundColor: 'white',
+        }}
+      >
+        <TextField
+          size="small"
+          variant="outlined"
+          placeholder="Type your message..."
+          fullWidth
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSendClick();
+            }
+          }}
+        />
+        <IconButton
+          color="primary"
+          onClick={handleSendClick}
+          disabled={!message.trim()}
+          sx={{ ml: 1 }}
+          aria-label="send"
+        >
+          <Send />
+        </IconButton>
+      </Box>
+        </Paper>
+        </Slide>
+      
+      <Fab 
+        color="primary" 
+        aria-label="chat"
+        onClick={handleChatClick}
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          backgroundColor: '#0a63cb',
+          '&:hover': {
+            backgroundColor: '#0950a3'
+          }
+        }}
+      >
+        <Chat />
+      </Fab>
       <header className="dashboard-header">
         <div className="header-content">
           <img src="./walmartlogo.png" alt="Walmart Logo" className="walmart-logo" />
