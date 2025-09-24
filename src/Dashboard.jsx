@@ -297,7 +297,9 @@ function Dashboard() {
           {/* Body */}
           <Box sx={{ flex: 1, p: 2, backgroundColor: '#f5f5f5' }}>
             <Typography variant="body1">
-              Hi, I am your property virtual assistant. How can I help you?
+              Hey there 👋
+
+How can we help you?
             </Typography>
           </Box>
 
